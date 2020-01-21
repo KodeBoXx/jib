@@ -10,7 +10,6 @@ public class WebController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @RequestMapping("/")
     public String home() {
-
         logger.info("home homehomehomehomehomehomehomehomehomehomehomehomehomehomehomehomehome");
         // pre-java 8
         if (logger.isDebugEnabled()) {
