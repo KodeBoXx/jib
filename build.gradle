@@ -1,0 +1,49 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+    id 'com.google.cloud.tools.jib' version '1.8.0'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    runtime.exclude group: 'logback-classic', module: 'ch.qos.logback'
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+//	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+//	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+        exclude group: 'logback-classic', module: 'ch.qos.logback'
+//		exclude group: 'log4j-over-slf4j', module: 'org.slf4j'
+//		exclude group: 'log4j-slf4j-impl', module: 'org.apache.logging.log4j'
+    }
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+//test {
+//	useJUnitPlatform()
+//}
+
+
+jib {
+    from {
+        image = 'openjdk:11-jre-slim'
+    }
+}
